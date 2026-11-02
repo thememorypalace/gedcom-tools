@@ -1,0 +1,67 @@
+0 HEAD
+1 SOUR ExampleSoft
+2 VERS 2.1
+1 DEST ANY
+1 DATE 2 NOV 2026
+1 SUBM @U1@
+1 SUBN @SN1@
+1 FILE family-551.ged
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 LANG English
+0 @U1@ SUBM
+1 NAME Example Submitter
+1 EMAIL submitter@@example.org
+0 @SN1@ SUBN
+0 @I-1@ INDI
+1 NAME Pieter /Vandamme/
+2 GIVN Pieter
+2 SURN Vandamme
+1 SEX M
+1 BIRT
+2 DATE @#DJULIAN@ 12 MAR 1648/9
+2 PLAC Leuven, Vlaams-Brabant, Belgium
+1 DEAT
+2 DATE ABT 1710
+1 RIN 101
+1 AFN ABCD-123
+1 FAMS @F1@
+1 NOTE @N1@
+1 OBJE
+2 FILE C:\Photos\pieter.jpg
+3 FORM jpg
+2 TITL Portrait of Pieter
+1 SOUR Parish register of Leuven, 1649
+2 PAGE folio 12
+0 @I2@ INDI
+1 NAME Maria /Claes/
+1 SEX F
+1 BIRT
+2 DATE INT 1652 (around the time of the great flood)
+1 DEAT
+2 DATE 3 JAN 1720
+1 FAMS @F1@
+1 ASSO @I-1@
+2 RELA Godfather
+0 @I3@ INDI
+1 NAME Jan /Vandamme/
+1 SEX M
+1 BIRT
+2 DATE 5 MAY 1675
+1 DEAT
+2 DATE 7 JUN 1676
+2 AGE INFANT
+1 FAMC @F1@
+2 PEDI birth
+0 @F1@ FAM
+1 HUSB @I-1@
+1 WIFE @I2@
+1 CHIL @I3@
+1 MARR
+2 DATE 14 FEB 1674
+0 @N1@ NOTE Pieter was a baker. His shop stood near the market square and he was
+1 CONC  known for rye bread.
+1 CONT Second line of the note.
+0 TRLR

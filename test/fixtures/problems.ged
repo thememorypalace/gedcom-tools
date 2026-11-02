@@ -1,0 +1,36 @@
+0 HEAD
+1 SOUR ExampleSoft
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+0 @I1@ INDI
+1 NAME Karel /Dewitte/
+1 BIRT
+2 DATE 10 APR 1900
+1 DEAT
+2 DATE 2 FEB 1890
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Els /MÃ¼ller/
+1 BIRT
+2 DATE 31.12.1880
+1 FAMS @F1@
+
+0 @I3@ INDI
+1 NAME Lotte /Dewitte/
+1 BIRT
+2 DATE 1 JAN 1895
+1 FAMC @F1@
+1 FAMC @F9@
+0 @I3@ INDI
+1 NAME Second /Record/
+0 @I4@ INDI
+1 SEX M
+3 NOTE This line skips a level.
+1 FAMS @F1@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I3@
+0 @F2@ FAM

@@ -1,0 +1,70 @@
+{
+  "name": "@thememorypalace/gedcom-tools",
+  "version": "0.1.0",
+  "description": "Convert GEDCOM 5.5.1 to GEDCOM 7.0 and back, check GEDCOM files for errors, and decode ANSEL, Windows-1252 and UTF-16. Zero dependencies, runs in Node and the browser.",
+  "keywords": [
+    "gedcom",
+    "gedcom7",
+    "gedcom-7",
+    "genealogy",
+    "family-tree",
+    "converter",
+    "validator",
+    "ansel"
+  ],
+  "homepage": "https://www.thememorypalace.ai/gedcom-7-converter",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thememorypalace/gedcom-tools.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thememorypalace/gedcom-tools/issues"
+  },
+  "license": "MIT",
+  "author": "The Memory Palace (https://www.thememorypalace.ai)",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "gedcom-tools": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run typecheck && npm run build && npm test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "tsup": "^9.0.0",
+    "typescript": "^6.0.3",
+    "vitest": "^5.1.0"
+  }
+}
