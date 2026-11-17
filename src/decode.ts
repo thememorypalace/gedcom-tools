@@ -88,7 +88,12 @@ export function decodeAnsel(bytes: Uint8Array): string {
 
 function readDeclaredChar(bytes: Uint8Array): string | null {
   // The header is at the top; 64 kB is plenty, even with long SOUR blocks.
-  const head = new TextDecoder("latin1").decode(bytes.subarray(0, Math.min(bytes.length, 65536)));
+  return declaredCharIn(new TextDecoder("latin1").decode(bytes.subarray(0, Math.min(bytes.length, 65536))));
+}
+
+/** The CHAR line in already decoded text (UTF-16 is decoded before the header can be read). */
+function declaredCharIn(text: string): string | null {
+  const head = text.slice(0, 65536);
   const m = head.match(/(?:^|[\r\n])\s*1\s+CHAR\s+([^\r\n]+)/);
   return m ? m[1].trim().toUpperCase() : null;
 }
@@ -130,8 +135,14 @@ export function decodeGedcom(input: ArrayBuffer | Uint8Array): DecodedGedcom {
   const bytes = input instanceof Uint8Array ? input : new Uint8Array(input);
 
   // UTF-16 with a BOM (rare, but some Windows programs write it).
-  if (bytes[0] === 0xff && bytes[1] === 0xfe) return finish(new TextDecoder("utf-16le").decode(bytes.subarray(2)), "UTF-16LE", true, true, null);
-  if (bytes[0] === 0xfe && bytes[1] === 0xff) return finish(new TextDecoder("utf-16be").decode(bytes.subarray(2)), "UTF-16BE", true, true, null);
+  if (bytes[0] === 0xff && bytes[1] === 0xfe) {
+    const t = new TextDecoder("utf-16le").decode(bytes.subarray(2));
+    return finish(t, "UTF-16LE", true, true, declaredCharIn(t));
+  }
+  if (bytes[0] === 0xfe && bytes[1] === 0xff) {
+    const t = new TextDecoder("utf-16be").decode(bytes.subarray(2));
+    return finish(t, "UTF-16BE", true, true, declaredCharIn(t));
+  }
 
   const hadBom = bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf;
   const body = hadBom ? bytes.subarray(3) : bytes;

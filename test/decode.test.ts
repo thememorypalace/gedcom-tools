@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { decodeGedcom, decodeAnsel, fixMojibakeLine, looksGarbled } from "../src/index";
+import { checkGedcom, decodeGedcom, decodeAnsel, fixMojibakeLine, looksGarbled } from "../src/index";
 import { bytes, header } from "./helpers";
 
 const NAME_RECORD = "0 @I1@ INDI\r\n1 NAME ";
@@ -97,6 +97,25 @@ describe("decodeGedcom", () => {
     const d = decodeGedcom(buf);
     expect(d.used).toBe("UTF-16LE");
     expect(d.text).toContain("Renée /Dubois/");
+    expect(d.declared).toBe("UNICODE");
+    expect(d.mislabeled).toBe(false);
+  });
+
+  it("reads the CHAR line of UTF-16 big endian with a byte order mark", () => {
+    const text = header("UNICODE") + NAME_RECORD + "Renée /Dubois" + END;
+    const buf = new Uint8Array(2 + text.length * 2);
+    buf[0] = 0xfe;
+    buf[1] = 0xff;
+    for (let i = 0; i < text.length; i++) {
+      const c = text.charCodeAt(i);
+      buf[2 + i * 2] = c >> 8;
+      buf[3 + i * 2] = c & 0xff;
+    }
+    const d = decodeGedcom(buf);
+    expect(d.used).toBe("UTF-16BE");
+    expect(d.declared).toBe("UNICODE");
+    const r = checkGedcom(buf);
+    expect(r.issues.map((i) => i.code)).not.toContain("encoding_no_char");
   });
 
   it("counts mixed line endings", () => {

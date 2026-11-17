@@ -190,3 +190,23 @@ it("every issue code has an English message", () => {
     expect(m.message, code).toBeTruthy();
   }
 });
+
+describe("dual years (issue #1)", () => {
+  it("accepts 1648/9, 1648/49 and 1648/1649 as the modern year 1649", () => {
+    for (const d of ["11 FEB 1648/9", "11 FEB 1648/49", "11 FEB 1648/1649", "@#DJULIAN@ 11 FEB 1648/9", "BEF 1699/00"]) {
+      expect(parseDateRange(d)).not.toBeNull();
+    }
+    expect(parseDateRange("11 FEB 1648/9")).toEqual({ min: 16490211, max: 16490211 });
+    expect(parseDateRange("1699/0")).toEqual({ min: 17000101, max: 17001231 });
+  });
+
+  it("still rejects a second year that is not the next one", () => {
+    expect(parseDateRange("11 FEB 1648/1655")).toBeNull();
+    expect(parseDateRange("11 FEB 1648/7")).toBeNull();
+  });
+
+  it("does not report a dual year as bad_date", () => {
+    const text = header("UTF-8") + "0 @I1@ INDI\n1 NAME Jan /Smit/\n1 BIRT\n2 DATE 11 FEB 1648/9\n0 TRLR\n";
+    expect(codes(checkGedcom(bytes(text)))).not.toContain("bad_date");
+  });
+});
