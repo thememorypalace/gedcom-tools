@@ -133,6 +133,8 @@ The package is published as `@thememorypalace/gedcom-tools`. If the scope is not
 
 Made by the small team behind [The Memory Palace](https://www.thememorypalace.ai/gedcom-7-converter) in Leuven, Belgium. The same code runs the free online GEDCOM 7 converter and GEDCOM checker on that site.
 
+Test files: [gedcom-test-files](https://github.com/thememorypalace/gedcom-test-files) has small synthetic GEDCOM files with known faults (broken links, duplicate IDs, impossible dates, ANSEL, UTF-16, garbled UTF-8) that you can use for your own parser as well.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
