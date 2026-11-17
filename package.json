@@ -1,6 +1,6 @@
 {
   "name": "@thememorypalace/gedcom-tools",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Convert GEDCOM 5.5.1 to GEDCOM 7.0 and back, check GEDCOM files for errors, and decode ANSEL, Windows-1252 and UTF-16. Zero dependencies, runs in Node and the browser.",
   "keywords": [
     "gedcom",

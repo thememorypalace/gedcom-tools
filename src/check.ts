@@ -130,12 +130,18 @@ function plainDate(s: string): DateRange | null | "other" {
   if (bc) return "other";
   const parts = t.split(/\s+/);
   const yearOf = (y: string) => {
-    // Dual year (1700/01) from the old New Year rule: the second one is the modern year.
-    const m = y.match(/^(\d{1,4})(?:\/(\d{2}))?$/);
+    // Dual year (1700/01, 1648/9, 1648/1649) from the old New Year rule: the
+    // second one is the modern year. 5.5.1 writes two digits, but one digit and
+    // the full year are common in real files and read the same way.
+    const m = y.match(/^(\d{1,4})(?:\/(\d{1,2}|\d{4}))?$/);
     if (!m) return null;
-    let n = parseInt(m[1], 10);
-    if (m[2]) n = Math.floor(n / 100) * 100 + parseInt(m[2], 10);
-    return n;
+    const n = parseInt(m[1], 10);
+    if (!m[2]) return n;
+    const next = n + 1;
+    if (m[2].length === 4) return parseInt(m[2], 10) === next ? next : null;
+    if (String(next).endsWith(m[2])) return next;
+    // Two digits that are not year + 1 (1700/05): keep the old reading, the century plus the digits.
+    return m[2].length === 2 ? Math.floor(n / 100) * 100 + parseInt(m[2], 10) : null;
   };
   if (parts.length === 1) {
     const y = yearOf(parts[0]);

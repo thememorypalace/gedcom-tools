@@ -4,6 +4,13 @@ All notable changes to this project are listed here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## 0.1.1 (2026-11-17)
+
+Fixed
+
+- `checkGedcom` no longer reports a dual year such as `11 FEB 1648/9` as `bad_date`. One digit, two digits and the full year after the slash are all read as the modern year (#1).
+- UTF-16 files with a byte order mark: the `CHAR` line is now read from the decoded text, so `encoding.declared` is filled in and `encoding_no_char` is no longer reported by mistake (#2).
+
 ## 0.1.0 (2026-11-02)
 
 First public release.
